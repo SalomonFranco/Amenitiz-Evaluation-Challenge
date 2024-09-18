@@ -57,7 +57,11 @@ class CashRegisterApp < Thor
   end
 
   def print_cart_total
-    puts "Final total: #{format('%.2f', @cart.total)}€"
+    puts "\nCart Summary:"
+    @cart.items.each do |code, item|
+      puts "#{item[:quantity]} x #{item[:product].name} (#{item[:product].code}): #{format('%.2f', item[:product].calculate_price_for(item[:quantity]))}€"
+    end
+    puts "\nFinal total: #{format('%.2f', @cart.total)}€"
   end
 end
 

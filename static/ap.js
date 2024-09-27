@@ -75,7 +75,7 @@ function App() {
       </div>
       <div className="products" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#ffffff', padding: 20, borderRadius: 10, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
         <div className="product" style={{ display: 'flex', justifyContent: 'space-between', width: '100%', padding: 10, borderBottom: '1px solid #ccc' }}>
-          <span style={{ fontSize: 18, fontWeight: 'bold' }}> ☕ Coffee - SF1</span>
+          <span style={{ fontSize: 18, fontWeight: 'bold' }}> ☕ Coffee - CF1</span>
           <span style={{ display: 'flex' }}>
             <button onClick={() => removeItem('SF1')} style={{ backgroundColor: 'red', color: '#ffffff', border: 'none', padding: 9, borderRadius: 5, cursor: 'pointer', width: 38, height: 38, fontSize: 22, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>-</button>
             <span style={{ margin: '0 10px', fontSize: 18 }}>{cart.SF1}</span>

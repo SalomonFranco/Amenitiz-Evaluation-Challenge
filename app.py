@@ -22,7 +22,7 @@ def calculateGreenTea(quantity,price,discount):
             return ((((quantity-1)/2))*price) + price
 
 def isDiscountStrawberry(quantity):
-    if quantity > 3:
+    if quantity >= 3:
         return 'Price Drop'
     else:
         return 'Not Elegible'
@@ -46,7 +46,7 @@ def calculateCoffee(quantity, price, discount):
     if discount == 'Not Elegible':
         return quantity * price
     else:
-        discounted_price = (2 / 3) * price
+        discounted_price = (2*price)/3
         return quantity * discounted_price
         
     
@@ -68,8 +68,8 @@ def handleCart():
     totalGreenTea=calculateGreenTea(grtea,priceGreenTea,discountGreenTea)
 
     priceStrberry=5.00
-    discountStrBerry=isDiscountGreenTea(grtea)
-    totalStrBerry=calculateGreenTea(grtea,priceStrberry,discountStrBerry)
+    discountStrBerry=isDiscountStrawberry(strberry)
+    totalStrBerry=calculateStrawberry(strberry,priceStrberry,discountStrBerry)
 
     # Coffee pricing
     priceCoffee = 11.23

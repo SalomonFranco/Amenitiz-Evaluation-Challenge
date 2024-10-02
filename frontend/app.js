@@ -3,67 +3,72 @@ const { render } = ReactDOM;
 
 function App() {
   const initialCart = { GR1: 0, SR1: 0, SF1: 0 };
-  const initialItems =[
-        {
-            "discount": "Not Elegible",
-            "name": "Green Tea",
-            "price_per_item": 3.11,
-            "product_code": "GR1",
-            "quantity": 0,
-            "total": 0.0
-        },
-        {
-            "name": "Strawberries",
-            "product_code": "SR1",
-            "quantity": 0
-        },
-        {
-            "name": "Coffee",
-            "product_code": "CF1",
-            "quantity": 0
-        }
-    ]
+  const initialItems = [
+    {
+      "discount": "Not Elegible",
+      "name": "Green Tea",
+      "price_per_item": 3.11,
+      "product_code": "GR1",
+      "quantity": 0,
+      "total": 0.0
+    },
+    {
+      "name": "Strawberries",
+      "product_code": "SR1",
+      "quantity": 0
+    },
+    {
+      "name": "Coffee",
+      "product_code": "CF1",
+      "quantity": 0
+    }
+  ];
   const [cart, setCart] = useState(initialCart);
   const [total, setTotal] = useState(0);
-  const [items,setItems] = useState(initialItems);
+  const [items, setItems] = useState(initialItems);
 
-  // Function to handle incrementing the quantity of an item
   const addItem = (item) => {
     setCart({ ...cart, [item]: cart[item] + 1 });
   };
 
-  // Function to handle decrementing the quantity of an item
   const removeItem = (item) => {
     if (cart[item] > 0) {
       setCart({ ...cart, [item]: cart[item] - 1 });
     }
   };
 
-  // Function to handle resetting the cart
   const resetCart = () => {
     setCart(initialCart);
   };
 
-  // Function to calculate the total price based on the cart
   const calculateTotal = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/algo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ cart }),
-      });
+        const response = await fetch('http://127.0.0.1:5000/algo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cart }),
+        });
 
-      const result = await response.json();
-      setTotal(result.total);
-      setItems(result.items);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log('Backend response:', result); // Log the response
+
+        if (result.total !== undefined && Array.isArray(result.items)) {
+            setTotal(result.total);
+            setItems(result.items);
+        } else {
+            throw new Error('Invalid response structure');
+        }
     } catch (error) {
-      console.error('Error calculating total:', error);
+        console.error('Error calculating total:', error);
     }
-  };
+};
 
-  // Update total whenever the cart changes
   useEffect(() => {
     calculateTotal();
   }, [cart]);
